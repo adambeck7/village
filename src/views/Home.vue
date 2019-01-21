@@ -1,9 +1,7 @@
 
 <template>
   <div class="home">
-    <img class="home-logo" alt="Village logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Village"/>
-    <button @click="logout">Logout</button>
+    <HelloWorld msg="My Village"/>
   </div>
 </template>
 
@@ -29,22 +27,9 @@ export default {
     this.uid = this.db.uid;
     this.email = this.db.email;
     this.displayName = this.db.displayName;
-  },
-  methods: {
-    logout: function() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.replace("login");
-        });
-    }
   }
 };
 </script>
 
 <style>
-.home-logo {
-  max-width: 10em;
-}
 </style>
