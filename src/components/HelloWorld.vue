@@ -1,13 +1,13 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <v-layout row>
+    <v-layout row py-4>
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
           <v-toolbar color="#368cbf" dark>
             <v-toolbar-side-icon></v-toolbar-side-icon>
 
-            <v-toolbar-title>Inbox</v-toolbar-title>
+            <v-toolbar-title>New Activity</v-toolbar-title>
 
             <v-spacer></v-spacer>
 

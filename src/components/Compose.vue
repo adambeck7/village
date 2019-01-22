@@ -13,7 +13,7 @@
             <v-autocomplete
               class="compose-test2"
               v-model="selected"
-              :items="['Trevor Handsen', 'Alex Nelson']"
+              :items="['Adam Ahern', 'Adam Beck', 'Jack Ryan']"
               chips
               label="To"
               full-width
@@ -24,16 +24,10 @@
               single-line
             ></v-autocomplete>
             <v-divider></v-divider>
-            <v-text-field
-              label="Subject"
-              value="Plans for the weekend"
-              single-line
-              full-width
-              hide-details
-            ></v-text-field>
-            <v-divider></v-divider>
+            <!-- <v-text-field label="Subject" value single-line full-width hide-details></v-text-field> -->
+            <!-- <v-divider></v-divider> -->
             <v-textarea
-              v-model="title"
+              v-model="body"
               label="Message"
               counter
               maxlength="120"
@@ -55,17 +49,16 @@ export default {
   },
   data() {
     return {
-      selected: ["Trevor Handsen"],
-      items: ["Trevor Handsen", "Alex Nelson"],
-      title:
-        "Hi,\nI just wanted to check in and see if you had any plans the upcoming weekend. We are thinking of heading up to Napa"
+      selected: [],
+      items: ["Adam Ahern", "Adam Beck", "Jack Ryan"],
+      body: ""
     };
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style >
+<style>
 .compose-input {
   -webkit-box-align: center;
   display: flex;
@@ -79,7 +72,6 @@ export default {
   > .v-menu__content {
   top: 3em !important;
   left: 0em !important;
-  background-color: brown;
 }
 </style> 
  
