@@ -1,14 +1,16 @@
 <template>
   <div class="hello">
+    <v-layout row>
+      <v-flex xs12 sm6 offset-sm3>
     <v-card>
-      <v-toolbar card color="pink" dark>
+      <v-toolbar card color="#368cbf " dark>
         <v-icon>arrow_back</v-icon>
         <v-toolbar-title>Compose</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-icon>send</v-icon>
       </v-toolbar>
-      <v-form>
-        <v-autocomplete
+      <v-form class="compose-test">
+        <v-autocomplete class="compose-test2"
           v-model="selected"
           :items="['Trevor Handsen', 'Alex Nelson']"
           chips
@@ -32,6 +34,8 @@
         <v-textarea v-model="title" label="Message" counter maxlength="120" full-width single-line></v-textarea>
       </v-form>
     </v-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
@@ -59,6 +63,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.compose-test2 > .v-input__control > .v-input__slot > .v-menu > .v-menu__content {
+top: 3em !important;
+left: 1em !important;
 }
 </style> 
  

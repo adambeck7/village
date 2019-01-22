@@ -23,7 +23,7 @@ export default {
       uid: "",
       email: "",
       displayName: "",
-      active: false
+      active: false,
     };
   },
   created: function() {
