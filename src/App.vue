@@ -74,6 +74,11 @@ export default {
           this.$router.replace("login");
         });
     }
+  },
+  mounted() {
+    if (firebase.auth().currentUser){
+      this.$store.commit('setUser', firebase.auth().currentUser.uid);
+    }
   }
 };
 </script>

@@ -73,8 +73,9 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           // eslint-disable-next-line
-          user => {
-            this.$store.commit('setUser', user);
+          loginPacket => {
+            console.log(loginPacket);
+            this.$store.commit('setUser', loginPacket.user.uid);
             this.$router.replace("home");
           },
           err => {
