@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <img class="home-logo" alt="Village logo" src="../assets/logo.png">
+    <!-- <img class="home-logo" alt="Village logo" src="../assets/logo.png"> -->
     <h3>Sign In</h3>
     <input type="text" v-model="email" placeholder="Email">
     <br>

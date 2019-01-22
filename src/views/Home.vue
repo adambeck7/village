@@ -1,7 +1,9 @@
 
 <template>
   <div class="home">
-    <HelloWorld msg="My Village"/>
+    <Compose/>
+    <br>
+    <HelloWorld/>
   </div>
 </template>
 
@@ -9,10 +11,12 @@
 import firebase from "firebase";
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
+import Compose from "@/components/Compose.vue";
 export default {
   name: "home",
   components: {
-    HelloWorld
+    HelloWorld,
+    Compose
   },
   data() {
     return {
