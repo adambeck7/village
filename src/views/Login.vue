@@ -74,6 +74,7 @@ export default {
         .then(
           // eslint-disable-next-line
           user => {
+            this.$store.commit('setUser', user);
             this.$router.replace("home");
           },
           err => {

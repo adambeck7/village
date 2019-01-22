@@ -4,10 +4,12 @@ import './registerServiceWorker';
 // import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
+
 // import store from './store';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import store from './store';
 // import 'mdi/font';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css';
 
@@ -35,6 +37,7 @@ firebase.auth().onAuthStateChanged(() => {
     /* eslint-disable no-new */
     app = new Vue({
       router,
+      store: store,
       render: h => h(App)
     }).$mount('#app');
   }
