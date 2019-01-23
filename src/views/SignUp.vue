@@ -2,7 +2,7 @@
   <div class="sign-up">
     <v-container grid-list-md text-xs-center>
       <h3>Create an Account</h3>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form" lazy-validation>
         <v-flex xs12 sm6 offset-sm3>
           <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 

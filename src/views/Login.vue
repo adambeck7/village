@@ -3,7 +3,7 @@
     <!-- <img class="home-logo" alt="Village logo" src="../assets/logo.png"> -->
     <v-container grid-list-md text-xs-center>
       <h3>Sign In</h3>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form" lazy-validation>
         <v-flex xs12 sm6 offset-sm3>
           <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
@@ -74,7 +74,7 @@ export default {
         .then(
           // eslint-disable-next-line
           user => {
-            this.$store.commit('setUser', user);
+            this.$store.commit("setUser", user);
             this.$router.replace("home");
           },
           err => {

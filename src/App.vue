@@ -12,7 +12,7 @@
           <img class="home-logo" alt="Village logo" src="./assets/logo.png">
         </v-container>
 
-        <v-navigation-drawer v-model="drawer" absolute temporary dark class="navBackground">
+        <v-navigation-drawer v-model="drawer" temporary absolute dark class="navBackground">
           <v-list class="pa-1">
             <v-list-tile avatar class="avatar-padding">
               <v-list-tile-avatar>
@@ -22,7 +22,8 @@
                 <span class="white--text headline">{{avatar}}</span>
               </v-avatar>-->
               <v-list-tile-content>
-                <v-list-tile-title style="padding-left:0.8em">{{userEmail}}</v-list-tile-title>
+                <v-list-tile-title style="padding-left:0.8em">{{ userEmail }}</v-list-tile-title>
+                <!-- <v-list-tile-title style="padding-left:0.8em">{{ userEmail }}</v-list-tile-title> -->
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -147,8 +148,8 @@ export default {
         { title: "Channel 2", icon: "question_answer" }
         // { title: "Logout", icon: "mdi-logout" }
       ],
-      userEmail: firebase.auth().currentUser.email,
-      avatar: firebase.auth().currentUser.email.charAt(0),
+      userEmail: "adam.c.ahern@gmail.com",
+      avatar: null,
       bottomNav: "recent"
     };
   },
@@ -160,7 +161,15 @@ export default {
         .then(() => {
           this.$router.replace("login");
         });
+    },
+    async getEmail() {
+      let userEmail = await firebase.auth().currentUser.email;
+      return userEmail;
+      // return firebase.auth().currentUser.email;
     }
+    // getAvatar: function() {
+    //   return firebase.auth().currentUser.email.charAt(0);
+    // }
   }
 };
 </script>
