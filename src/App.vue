@@ -76,9 +76,21 @@ export default {
     }
   },
   mounted() {
-    if (firebase.auth().currentUser){
+    // checking if the firebase recognized a current user and the Vuex state is null (happens when user is automatically logged in and never views the login screen). This allows us to always show a user state with the correct id, accessible across all apps. 
+    if (firebase.auth().currentUser && !this.$store.state.user){
       this.$store.commit('setUser', firebase.auth().currentUser.uid);
     }
+
+    // console.log(this.$store.state.uid)
+    firebase.firestore()
+      .collection('userDetails')
+      .doc(this.$store.state.user)
+      .get()
+      .then(res => {
+        console.log(res.data());
+        this.$store.commit('setUserInformation', res.data())
+      })
+      .catch(err => console.log({err}));
   }
 };
 </script>
