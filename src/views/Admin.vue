@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Admin Example</h1>
+    <h1>Admin</h1>
     <div v-for="message in proposedMessages" :key="message.senderID" style="border: 1px black solid; margin: 20px; padding: 10px;">
       <h3>{{ message.senderID }} says:</h3>
       <!-- this should be content -->

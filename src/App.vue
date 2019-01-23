@@ -19,11 +19,11 @@
                 <img src="https://randomuser.me/api/portraits/men/85.jpg">
               </v-list-tile-avatar>-->
               <v-avatar color="teal">
-                <span class="white--text headline">{{avatar}}</span>
+                <span class="white--text headline" v-if="avatar">{{avatar}}</span>
               </v-avatar>
 
               <v-list-tile-content>
-                <v-list-tile-title style="padding-left:1.3em">{{userEmail}}</v-list-tile-title>
+                <v-list-tile-title style="padding-left:1.3em" v-if="userEmail">{{userEmail}}</v-list-tile-title>
                 <button @click="logout" style="padding-left:1.3em">Logout</button>
               </v-list-tile-content>
             </v-list-tile>
@@ -32,7 +32,7 @@
           <v-list class="pt-0" dense>
             <v-divider></v-divider>
 
-            <v-list-tile v-for="item in items" :key="item.title" @click>
+            <v-list-tile v-for="item in items" :key="item.title">
               <v-list-tile-action>
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-tile-action>
@@ -93,10 +93,18 @@ export default {
         { title: "Settings", icon: "question_answer" }
         // { title: "Logout", icon: "mdi-logout" }
       ],
-      userEmail: firebase.auth().currentUser.email,
-      avatar: firebase.auth().currentUser.email.charAt(0),
+      // userEmail: firebase.auth().currentUser.email || null,
       bottomNav: "recent"
     };
+  },
+  computed: {
+    userEmail() {
+      if (firebase.auth().currentUser) return firebase.auth().currentUser.email;
+      else return null;
+    },
+    avatar() {
+      if (firebase.auth().currentUser) return firebase.auth().currentUser.email.charAt(0);
+    }
   },
   methods: {
     logout: function() {
@@ -107,6 +115,22 @@ export default {
           this.$router.replace("login");
         });
     }
+  },
+  mounted() {
+    // checking if the firebase recognized a current user and the Vuex state is null (happens when user is automatically logged in and never views the login screen). This allows us to always show a user state with the correct id, accessible across all apps. 
+    if (firebase.auth().currentUser && !this.$store.state.user){
+      this.$store.commit('setUser', firebase.auth().currentUser.uid);
+    }
+
+    // this adds user details to the vuex state.
+    firebase.firestore()
+      .collection('userDetails')
+      .doc(this.$store.state.user)
+      .get()
+      .then(res => {
+        this.$store.commit('setUserInformation', res.data())
+      })
+      .catch(err => console.log({err}));
   }
 };
 </script>

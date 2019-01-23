@@ -7,15 +7,13 @@ import Login from '@/views/Login';
 import SignUp from '@/views/SignUp';
 import TestQuery from '@/views/TestQuery';
 import Admin from '@/views/Admin';
+import Channel from '@/views/Channel';
 
 Vue.use(Router);
 
 const router = new Router({
+  mode: 'history',
   routes: [
-    {
-      path: '*',
-      redirect: '/login'
-    },
     {
       path: '/',
       redirect: '/login'
@@ -47,7 +45,16 @@ const router = new Router({
       path: '/admin',
       name: 'Admin',
       component: Admin
-    }
+    },
+    {
+      path: '/c/:channelId', 
+      name: 'channel',
+      component: Channel
+    },
+    {
+      path: '*',
+      redirect: '/login'
+    },
   ]
 });
 
