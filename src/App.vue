@@ -19,11 +19,11 @@
                 <img src="https://randomuser.me/api/portraits/men/85.jpg">
               </v-list-tile-avatar>-->
               <v-avatar color="teal">
-                <span class="white--text headline">A</span>
+                <span class="white--text headline">{{avatar}}</span>
               </v-avatar>
 
               <v-list-tile-content>
-                <v-list-tile-title style="padding-left:1.3em">Adam Beck</v-list-tile-title>
+                <v-list-tile-title style="padding-left:1.3em">{{userEmail}}</v-list-tile-title>
                 <button @click="logout" style="padding-left:1.3em">Logout</button>
               </v-list-tile-content>
             </v-list-tile>
@@ -48,6 +48,36 @@
       <router-link to="/about">About</router-link>-->
     </div>
     <router-view/>
+    <v-card height="200px" flat>
+      <v-bottom-nav :active.sync="bottomNav" :value="true" fixed color="transparent">
+        <v-btn color="teal" flat value="home">
+          <span>Home</span>
+          <v-icon>home</v-icon>
+        </v-btn>
+
+        <v-btn color="teal" flat value="mail">
+          <span>Mail</span>
+          <v-icon>email</v-icon>
+        </v-btn>
+
+        <v-btn color="teal" flat value="messages">
+          <span>Messages</span>
+          <v-icon>chat</v-icon>
+        </v-btn>
+        <v-btn color="teal" flat value="events">
+          <span>Events</span>
+          <v-icon>event</v-icon>
+        </v-btn>
+        <v-btn color="teal" flat value="notifications">
+          <span>Notifications</span>
+          <v-icon>notifications</v-icon>
+        </v-btn>
+        <v-btn color="teal" flat value="profile">
+          <span>Profile</span>
+          <v-icon>settings</v-icon>
+        </v-btn>
+      </v-bottom-nav>
+    </v-card>
   </div>
 </template>
 
@@ -60,9 +90,12 @@ export default {
       drawer: null,
       items: [
         { title: "Home", icon: "dashboard" },
-        { title: "About", icon: "question_answer" }
+        { title: "Settings", icon: "question_answer" }
         // { title: "Logout", icon: "mdi-logout" }
-      ]
+      ],
+      userEmail: firebase.auth().currentUser.email,
+      avatar: firebase.auth().currentUser.email.charAt(0),
+      bottomNav: "recent"
     };
   },
   methods: {
@@ -119,6 +152,10 @@ export default {
 }
 .avatar-padding > :first-child {
   padding-left: 0 !important;
+}
+.v-item-group.v-bottom-nav .v-btn {
+  max-width: 10em;
+  background: white !important;
 }
 </style>
 
