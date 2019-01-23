@@ -1,20 +1,38 @@
 <template>
   <div v-if="channelData">
     <h1>{{ channelData.channelName }}</h1>
-    {{ userInformation.channels }}
-    <div id="chat-area">
-
-    </div>
-    <textarea id="compose-message" v-model="message" @keydown="sendMessage($event)"></textarea>
-  </div>
-  <div v-else>No Access. {{ userInformation.channels }}
     
+    <div>
+      <v-container>
+        <v-layout row wrap>
+          <v-flex xs12>
+            <v-list two-line>
+              template
+            </v-list>
+            
+            <div v-for="message in channelData.thread" :key="message.content">{{ message.content }}</div>
+          </v-flex>
+          <v-flex xs12>
+            <v-textarea
+              :auto-grow="true"
+              solo
+              append-icon="send"
+              v-model="message"
+              @click:append="sendMessage()"
+            >
+              <v-icon>home</v-icon>
+            </v-textarea>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </div>
+  </div>
+  <div v-else>No Access.
   </div>
 </template>
 
 <script>
 import db from 'firebase';
-import { mapGetters } from 'vuex';
 // This is the channel view page. We get the id from the query params. We need to do a couple of things: 
 // 1. Render a 404 if the channel does not exist.
 // 2. Render a 401 if the user cannot view the channel, eg, doesn't have permissions.
@@ -22,44 +40,40 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      channelData: null,
       message: null,
+      channelData: null,
     }
   },
   computed: {
-    ...mapGetters([
-      'userInformation'
-    ])
-  },
-  methods: {
-    sendMessage(e) {
-      console.log({e})
-      if (e.keyCode === 13) console.log({e});
+    information() { 
+      return this.$store.getters.userInformation; 
     }
   },
-   mounted() {
-    // we're having issues recognizing the state change. This will have to be addressed.
-    // const state = await this.$store.state;
-    // console.log(state);
-    // // Here, we loop through the channels the user has permissions for and see if we get a match. If we do, we return render code 1. 
-    // state.information.channels.map(channelID => {
-    //   // if we get a match, we return 1 because we're aok to access the chat. 
-    //   console.log(`Looping through channels; currently at ${this.$route.params.channelId} and comparing it with ${channel}`)
-    //   if ( this.$route.params.channelId === channelID) {
-    //     // if the check is valid we hit up the firestore and grab the chat data. 
-    //     db.firestore()
-    //       .collection('channels')
-    //       .doc(channelID)
-    //       .get()
-    //       .then(res => this.channelData = res.data())
-    //       .catch(err => console.log({err}));
-
-    //     return 1;
-    //   } else {
-    //     console.log(0);
-    //     // here we need to just plain reroute right out the gate to keep the channel completely inaccessible to outsiders. 
-    //   }
-    // });
+  watch: {
+    information: function(val) {
+      if (this.channelData === null) {
+        this.information.channels.map(channelId => {
+          if (channelId === this.$route.params.channelId) {
+            db.firestore()
+              .collection('channels')
+              .doc(channelId)
+              .get()
+              .then(result => this.channelData = result.data())
+              .catch(err => console.log({err}));
+          }
+        })
+      }
+    }
+  },
+  methods: {
+    sendMessage() {
+      this.channelData.thread.push({
+        content: this.message,
+        sendTime: new Date(),
+        sender: this.$store.state.user
+      });
+      this.message = "";
+    }
   }
 }
 </script>
