@@ -12,26 +12,27 @@
           <img class="home-logo" alt="Village logo" src="./assets/logo.png">
         </v-container>
 
-        <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-navigation-drawer v-model="drawer" absolute temporary dark class="navBackground">
           <v-list class="pa-1">
             <v-list-tile avatar class="avatar-padding">
-              <!-- <v-list-tile-avatar>
-                <img src="https://randomuser.me/api/portraits/men/85.jpg">
-              </v-list-tile-avatar>-->
-              <v-avatar color="teal">
+              <v-list-tile-avatar>
+                <img src="./assets/adam_ahern.jpeg">
+              </v-list-tile-avatar>
+              <!-- <v-avatar color="teal">
                 <span class="white--text headline">{{avatar}}</span>
-              </v-avatar>
-
+              </v-avatar>-->
               <v-list-tile-content>
-                <v-list-tile-title style="padding-left:1.3em">{{userEmail}}</v-list-tile-title>
-                <button @click="logout" style="padding-left:1.3em">Logout</button>
+                <v-list-tile-title style="padding-left:0.8em">{{userEmail}}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
-
+          <!-- <v-divider></v-divider> -->
+          <!-- <v-list>
+            <v-list-tile>
+              <v-list-tile-title class="title">Home</v-list-tile-title>
+            </v-list-tile>
+          </v-list>-->
           <v-list class="pt-0" dense>
-            <v-divider></v-divider>
-
             <v-list-tile v-for="item in items" :key="item.title" @click>
               <v-list-tile-action>
                 <v-icon>{{ item.icon }}</v-icon>
@@ -41,6 +42,45 @@
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
+          </v-list>
+          <v-list class="pt-0" dense>
+            <v-divider></v-divider>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-title class="title">Direct Messages</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+
+            <v-list-tile v-for="directMessage in directMessages" :key="directMessage.title" @click>
+              <v-list-tile-action>
+                <v-icon>{{ directMessage.icon }}</v-icon>
+              </v-list-tile-action>
+
+              <v-list-tile-content>
+                <v-list-tile-title>{{ directMessage.title }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+          <v-list class="pt-0" dense>
+            <v-divider></v-divider>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-title class="title">Circles</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+
+            <v-list-tile v-for="circle in circles" :key="circle.title" @click>
+              <v-list-tile-action>
+                <v-icon>{{ circle.icon }}</v-icon>
+              </v-list-tile-action>
+
+              <v-list-tile-content>
+                <v-list-tile-title>{{ circle.title }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+          <v-list>
+            <v-btn color="#33363b" @click="logout" class="navLogoutButton">Logout</v-btn>
           </v-list>
         </v-navigation-drawer>
       </v-layout>
@@ -89,8 +129,22 @@ export default {
     return {
       drawer: null,
       items: [
-        { title: "Home", icon: "dashboard" },
-        { title: "Settings", icon: "question_answer" }
+        { title: "Home", icon: "home" },
+        { title: "Settings", icon: "settings" }
+        // { title: "Logout", icon: "mdi-logout" }
+      ],
+      directMessages: [
+        { title: "Dana", icon: "question_answer" },
+        { title: "Hannah", icon: "question_answer" },
+        { title: "Dillon", icon: "question_answer" },
+        { title: "Betsy", icon: "question_answer" },
+        { title: "Ella", icon: "question_answer" },
+        { title: "Libby", icon: "question_answer" }
+        // { title: "Logout", icon: "mdi-logout" }
+      ],
+      circles: [
+        { title: "Channel 1", icon: "dashboard" },
+        { title: "Channel 2", icon: "question_answer" }
         // { title: "Logout", icon: "mdi-logout" }
       ],
       userEmail: firebase.auth().currentUser.email,
@@ -140,9 +194,35 @@ export default {
   max-width: 10em;
   background: white !important;
 }
+.navBackground {
+  background: #0386c1 !important;
+}
+.navBackground
+  > [role="list"]
+  > [role="list-item"]
+  > .v-list__tile
+  > .v-list__tile__content
+  > .v-list__tile_title {
+  color: red !important;
+}
+.theme--dark.v-icon {
+  color: #eaeaea;
+}
 </style>
 
 <style scoped>
+.v-list__tile__title {
+  color: #eaeaea;
+}
+.navBackground > .v-list {
+  padding: 0;
+}
+.navLogoutButton {
+  position: absolute;
+  bottom: 1em;
+  left: 7em;
+  align-content: center;
+}
 /* .v-list__tile__content {
   padding-left: 1.3em;
 } */
