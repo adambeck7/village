@@ -50,19 +50,31 @@
     <router-view/>
     <v-card height="200px" flat>
       <v-bottom-nav :active.sync="bottomNav" :value="true" fixed color="transparent">
-        <v-btn color="teal" flat value="recent">
-          <span>Recent</span>
-          <v-icon>history</v-icon>
+        <v-btn color="teal" flat value="home">
+          <span>Home</span>
+          <v-icon>home</v-icon>
         </v-btn>
 
-        <v-btn color="teal" flat value="favorites">
-          <span>Favorites</span>
-          <v-icon>favorite</v-icon>
+        <v-btn color="teal" flat value="mail">
+          <span>Mail</span>
+          <v-icon>email</v-icon>
         </v-btn>
 
-        <v-btn color="teal" flat value="nearby">
-          <span>Nearby</span>
-          <v-icon>place</v-icon>
+        <v-btn color="teal" flat value="messages">
+          <span>Messages</span>
+          <v-icon>chat</v-icon>
+        </v-btn>
+        <v-btn color="teal" flat value="events">
+          <span>Events</span>
+          <v-icon>event</v-icon>
+        </v-btn>
+        <v-btn color="teal" flat value="notifications">
+          <span>Notifications</span>
+          <v-icon>notifications</v-icon>
+        </v-btn>
+        <v-btn color="teal" flat value="profile">
+          <span>Profile</span>
+          <v-icon>settings</v-icon>
         </v-btn>
       </v-bottom-nav>
     </v-card>
@@ -123,6 +135,10 @@ export default {
 }
 .avatar-padding > :first-child {
   padding-left: 0 !important;
+}
+.v-item-group.v-bottom-nav .v-btn {
+  max-width: 10em;
+  background: white !important;
 }
 </style>
 
