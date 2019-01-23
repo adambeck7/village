@@ -16,7 +16,9 @@ export default new Vuex.Store({
       state.information = information;
     }
   },
-  actions: {
-
+  getters: {
+    userInformation(state){
+      return state.information;
+    }
   }
 });

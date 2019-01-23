@@ -3,7 +3,7 @@
     <!-- <img class="home-logo" alt="Village logo" src="../assets/logo.png"> -->
     <v-container grid-list-md text-xs-center>
       <h3>Sign In</h3>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form" lazy-validation>
         <v-flex xs12 sm6 offset-sm3>
           <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
@@ -74,8 +74,18 @@ export default {
         .then(
           // eslint-disable-next-line
           loginPacket => {
-            console.log(loginPacket);
+            // here we commit the uid to our store...
             this.$store.commit('setUser', loginPacket.user.uid);
+            // and get user details from firebase to move to the store as well.
+            firebase.firestore()
+              .collection('userDetails')
+              .doc(loginPacket.user.uid)
+              .get()
+              .then(userDetails => {
+                this.$store.commit('setUserInformation', userDetails.data());
+              })
+              .catch(err => console.log({err}));
+
             this.$router.replace("home");
           },
           err => {
