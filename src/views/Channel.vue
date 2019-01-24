@@ -66,9 +66,9 @@ export default {
             db.firestore()
               .collection('channels')
               .doc(channelId)
-              .get()
-              .then(result => this.channelData = result.data())
-              .catch(err => console.log({err}));
+              .onSnapshot(doc => {
+                this.channelData = doc.data();
+              });
           }
         })
       }
