@@ -3,7 +3,7 @@
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
-          <v-toolbar card color="#368cbf " dark>
+          <v-toolbar card color="#0386c1" dark>
             <v-icon>arrow_back</v-icon>
             <v-toolbar-title>Compose</v-toolbar-title>
             <v-spacer></v-spacer>
