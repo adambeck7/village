@@ -179,6 +179,7 @@ export default {
 </script>
 
 <style>
+  
   #header {
     padding: 1em;
     border-bottom: .1em lightgray solid;
