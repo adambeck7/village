@@ -48,7 +48,7 @@
       <router-link to="/about">About</router-link>-->
     </div>
     <router-view/>
-    <v-card height="200px" flat>
+    <v-card flat>
       <v-bottom-nav :active.sync="bottomNav" :value="true" fixed color="transparent">
         <v-btn color="teal" flat value="home">
           <span>Home</span>
