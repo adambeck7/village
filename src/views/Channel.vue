@@ -7,10 +7,18 @@
         <v-layout row wrap>
           <v-flex xs12>
             <v-list two-line>
-              template
+              <div v-for="message in channelData.thread" :key="message.content">
+                <v-list-tile>
+                  <v-list-tile-content :class="{ myMessage: (users[message.sender] ===  information.username )}">
+                    <v-list-tile-sub-title>{{ users[message.sender] }}</v-list-tile-sub-title>
+                    <v-list-tile-title :class="{ myMessage: (users[message.sender] ===  information.username )}">
+                      {{ message.content }}
+                    </v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+                <v-divider></v-divider>
+              </div>
             </v-list>
-            
-            <div v-for="message in channelData.thread" :key="message.content">{{ message.content }}</div>
           </v-flex>
           <v-flex xs12>
             <v-textarea
@@ -42,6 +50,7 @@ export default {
     return {
       message: null,
       channelData: null,
+      users: {},
     }
   },
   computed: {
@@ -57,9 +66,9 @@ export default {
             db.firestore()
               .collection('channels')
               .doc(channelId)
-              .get()
-              .then(result => this.channelData = result.data())
-              .catch(err => console.log({err}));
+              .onSnapshot(doc => {
+                this.channelData = doc.data();
+              });
           }
         })
       }
@@ -73,7 +82,32 @@ export default {
         sender: this.$store.state.user
       });
       this.message = "";
+      db.firestore()
+        .collection("channels")
+        .doc(this.$route.params.channelId)
+        .update({
+          thread: this.channelData.thread
+        })
+        .catch(err => console.log(err));
     }
+  },
+  mounted() {
+    db.firestore()
+      .collection('channels')
+      .doc(this.$route.params.channelId)
+      .get()
+      .then(res => {
+        const members = res.data().members;
+        members.map(member => {
+          db.firestore()
+            .collection('userDetails')
+            .doc(member)
+            .get()
+            .then(memberDetails => {
+              this.users[member] = memberDetails.data().username;
+            });
+        });
+      });
   }
 }
 </script>
@@ -94,5 +128,9 @@ export default {
     margin: 0 auto;
     padding: 2em;
     border: .5px lightgray solid;
+  }
+
+  .myMessage {
+    text-align: right;
   }
 </style>
