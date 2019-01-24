@@ -5,7 +5,7 @@
         <v-container>
           <v-layout justify-start>
             <!-- <v-btn color="pink" dark @click.stop="drawer = !drawer">Toggle</v-btn> -->
-            <v-btn fab dark color="teal" @click.stop="drawer = !drawer">
+            <v-btn class="navButton" fab dark color="teal" @click.stop="drawer = !drawer">
               <v-icon dark>list</v-icon>
             </v-btn>
           </v-layout>
@@ -22,8 +22,8 @@
                 <span class="white--text headline">{{avatar}}</span>
               </v-avatar>-->
               <v-list-tile-content>
+                <!-- <v-list-tile-title style="padding-left:0.8em">{{ getEmail() }}</v-list-tile-title> -->
                 <v-list-tile-title style="padding-left:0.8em">{{ userEmail }}</v-list-tile-title>
-                <!-- <v-list-tile-title style="padding-left:0.8em">{{ userEmail }}</v-list-tile-title> -->
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -101,10 +101,10 @@
           <v-icon>email</v-icon>
         </v-btn>
 
-        <v-btn color="teal" flat value="messages">
+        <!-- <v-btn color="teal" flat value="messages">
           <span>Messages</span>
           <v-icon>chat</v-icon>
-        </v-btn>
+        </v-btn>-->
         <v-btn color="teal" flat value="events">
           <span>Events</span>
           <v-icon>event</v-icon>
@@ -124,6 +124,9 @@
 
 
 <script>
+console.log(window.location.href);
+if (window.location.href == "test") {
+}
 import firebase from "firebase";
 export default {
   data() {
@@ -163,7 +166,9 @@ export default {
         });
     },
     async getEmail() {
+      console.log(userEmail);
       let userEmail = await firebase.auth().currentUser.email;
+      console.log(userEmail);
       return userEmail;
       // return firebase.auth().currentUser.email;
     }
@@ -203,17 +208,24 @@ export default {
   max-width: 10em;
   background: white !important;
 }
+.v-item-group.v-bottom-nav {
+  justify-content: space-evenly !important;
+}
+.v-item-group.v-bottom-nav .v-btn {
+  margin-left: -1em;
+  margin-right: -1em;
+}
 .navBackground {
   background: #0386c1 !important;
 }
-.navBackground
-  > [role="list"]
-  > [role="list-item"]
-  > .v-list__tile
-  > .v-list__tile__content
-  > .v-list__tile_title {
-  color: red !important;
-}
+// .navBackground
+//   > [role="list"]
+//   > [role="list-item"]
+//   > .v-list__tile
+//   > .v-list__tile__content
+//   > .v-list__tile_title {
+//   // color: red !important;
+// }
 .theme--dark.v-icon {
   color: #eaeaea;
 }

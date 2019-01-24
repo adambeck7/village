@@ -109,4 +109,12 @@ p a {
   text-decoration: underline;
   cursor: pointer;
 }
+.v-btn--floating {
+  visibility: hidden;
+}
+</style>
+<style>
+/* .v-btn .v-btn--floating {
+  display: none;
+} */
 </style>
