@@ -15,18 +15,6 @@
         <v-navigation-drawer v-model="drawer" temporary absolute dark class="navBackground">
           <v-list class="pa-1">
             <v-list-tile avatar class="avatar-padding">
-<<<<<<< HEAD
-              <!-- <v-list-tile-avatar>
-                <img src="https://randomuser.me/api/portraits/men/85.jpg">
-              </v-list-tile-avatar>-->
-              <v-avatar color="teal">
-                <span class="white--text headline" v-if="avatar">{{avatar}}</span>
-              </v-avatar>
-
-              <v-list-tile-content>
-                <v-list-tile-title style="padding-left:1.3em" v-if="userEmail">{{userEmail}}</v-list-tile-title>
-                <button @click="logout" style="padding-left:1.3em">Logout</button>
-=======
               <v-list-tile-avatar>
                 <img src="./assets/adam_ahern.jpeg">
               </v-list-tile-avatar>
@@ -53,7 +41,6 @@
 
               <v-list-tile-content>
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
->>>>>>> 2d05b478041a9375cfb2a24af7b493fd4a3bec24
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -83,11 +70,7 @@
               </v-list-tile>
             </v-list>
 
-<<<<<<< HEAD
-            <v-list-tile v-for="item in items" :key="item.title">
-=======
             <v-list-tile v-for="circle in circles" :key="circle.title" @click>
->>>>>>> 2d05b478041a9375cfb2a24af7b493fd4a3bec24
               <v-list-tile-action>
                 <v-icon>{{ circle.icon }}</v-icon>
               </v-list-tile-action>
@@ -154,9 +137,6 @@ export default {
         { title: "Settings", icon: "settings" }
         // { title: "Logout", icon: "mdi-logout" }
       ],
-<<<<<<< HEAD
-      // userEmail: firebase.auth().currentUser.email || null,
-=======
       directMessages: [
         { title: "Dana", icon: "question_answer" },
         { title: "Hannah", icon: "question_answer" },
@@ -173,7 +153,6 @@ export default {
       ],
       userEmail: "adam.c.ahern@gmail.com",
       avatar: null,
->>>>>>> 2d05b478041a9375cfb2a24af7b493fd4a3bec24
       bottomNav: "recent"
     };
   },
@@ -202,28 +181,9 @@ export default {
       return userEmail;
       // return firebase.auth().currentUser.email;
     }
-<<<<<<< HEAD
-  },
-  mounted() {
-    // checking if the firebase recognized a current user and the Vuex state is null (happens when user is automatically logged in and never views the login screen). This allows us to always show a user state with the correct id, accessible across all apps. 
-    if (firebase.auth().currentUser && !this.$store.state.user){
-      this.$store.commit('setUser', firebase.auth().currentUser.uid);
-    }
-
-    // this adds user details to the vuex state.
-    firebase.firestore()
-      .collection('userDetails')
-      .doc(this.$store.state.user)
-      .get()
-      .then(res => {
-        this.$store.commit('setUserInformation', res.data())
-      })
-      .catch(err => console.log({err}));
-=======
     // getAvatar: function() {
     //   return firebase.auth().currentUser.email.charAt(0);
     // }
->>>>>>> 2d05b478041a9375cfb2a24af7b493fd4a3bec24
   }
 };
 </script>
