@@ -4,6 +4,8 @@ import './registerServiceWorker';
 // import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
+import DaySpanVuetify from 'dayspan-vuetify';
+import 'dayspan-vuetify/dist/lib/dayspan-vuetify.min.css';
 
 // import store from './store';
 import firebase from 'firebase/app';
@@ -14,6 +16,12 @@ import store from './store';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css';
 
 Vue.config.productionTip = false;
+
+Vue.use(DaySpanVuetify, {
+  methods: {
+    getDefaultEventColor: () => '#1976d2'
+  }
+});
 
 // new Vue({
 //   router,
