@@ -211,13 +211,31 @@ export default {
 
 .userMessage {
   margin-left: 40%;
-  background-color: #55ab59 !important;
+  /* background-color: #55ab59 !important; */
   columns: #fefefe;
+  background: -webkit-linear-gradient(
+    360deg,
+    #00537e 10%,
+    #3aa17e 360%
+  ) !important;
+  background: linear-gradient(360deg, #00537e 10%, #3aa17e 360%) !important;
 }
 
 .message {
   padding: 1em;
-  background-color: #368cbf;
+  /* background-color: #368cbf; */
+  background: -webkit-linear-gradient(
+    360deg,
+    #38aecc 10%,
+    #347fb9 360%
+  ); /* Chrome 10+, Saf5.1+ */
+  background: -moz-linear-gradient(
+    360deg,
+    #38aecc 10%,
+    #347fb9 360%
+  ); /* FF3.6+ */
+  background: linear-gradient(360deg, #38aecc 10%, #347fb9 360%); /* W3C */
+
   border-radius: 0.5em;
   /* border: 0.1em #55ab59 solid; */
   margin-bottom: 1em;
@@ -233,5 +251,6 @@ export default {
 }
 .message-content {
   text-align: left;
+  font-size: 1.3em;
 }
 </style>

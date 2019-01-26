@@ -248,6 +248,17 @@ export default {
 }
 .navBackground {
   background: #0386c1 !important;
+  // background: -webkit-linear-gradient(
+  //   360deg,
+  //   #38aecc 10%,
+  //   #347fb9 360%
+  // ); /* Chrome 10+, Saf5.1+ */
+  // background: -moz-linear-gradient(
+  //   360deg,
+  //   #38aecc 10%,
+  //   #347fb9 360%
+  // ); /* FF3.6+ */
+  background: linear-gradient(360deg, #38aecc 10%, #347fb9 360%); /* W3C */
 }
 .bottomNavFooter {
   background-color: white !important;
