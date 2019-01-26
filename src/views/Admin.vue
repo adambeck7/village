@@ -1,5 +1,19 @@
 <template>
   <div>
+    <v-card v-for="channel in adminChannels" :key="channel.id" style="width: 95%; margin: 0 auto;">
+      <v-card-title primary-title>
+        <h3 class="headline mb-0">{{ channel.information.channelName }}</h3>
+      </v-card-title>
+       <v-list two-line>
+        <v-list-tile v-for="member in channel.information.members" :key="member">
+          <v-list-tile-avatar v-if="memberDetails[channel.id][member]">{{ getInitials(memberDetails[channel.id][member]) }}</v-list-tile-avatar>
+          <v-list-tile-content>
+            <!-- Look into the watch variable that sets the memberDetails object to see why this makes sense. -->
+            <v-list-tile-title>{{ memberDetails[channel.id][member] }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-card>
   </div>
 </template>
 
@@ -9,7 +23,8 @@ import firebase from 'firebase';
 export default {
   data() {
     return {
-      adminChannels: []
+      adminChannels: [],
+      memberDetails: {},
     }
   },
   computed: {
@@ -32,16 +47,55 @@ export default {
   watch: {
     // watching for computed admin check to run any db call.
     admin: function(val) {
+      // map the channelId array returned from admin.
       val.map(channelId => {
+        // hit up firebase for every channel returned
         firebase.firestore()
           .collection('channels')
           .doc(channelId)
           .get()
           .then(channelInformation => {
-            this.adminChannels.push(channelInformation.data());
-          })
-          .catch(error => console.log({error}));
+
+            // and add any relevant channel data.
+            this.adminChannels.push({
+              id: channelId,
+              information: channelInformation.data()
+            });
+          });
       });
+    },
+    // now we watch the adminChannels data in order to get member details downloaded to the channel.
+    adminChannels: function(val) {
+      // map each channel in the array
+      val.map(channel => {
+        // set a member details property with the same id as this channel and declare it with an empty object.
+        this.$set(this.memberDetails, channel.id, {});
+
+        // map the channels memberIDs
+        channel.information.members.map(memberId => {
+          // hit up the database
+          firebase
+            .firestore()
+            .collection('userDetails')
+            .doc(memberId)
+            .get()
+            .then(userDetail => {
+              // and set the channelID property of user details object with the memberID and their corresponding name.
+              this.$set(
+                this.memberDetails[channel.id],
+                memberId, 
+                userDetail.data().username
+              );
+            })
+        });
+      })
+    }
+  },
+  methods: {
+    // just a bit of fun.
+    getInitials(name) {
+      const firstLast = name.split(' ');
+      return `${firstLast[0].charAt(0)}${firstLast[1].charAt(0)}`;
     }
   }
 }
