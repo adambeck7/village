@@ -47,6 +47,7 @@ export default {
   methods: {
     // here's where the work will happen to send a message. 
     sendMessage() {
+
       firebase.firestore()
         .collection('messages')
         // we add a message with the pertinent details.
@@ -54,10 +55,8 @@ export default {
           sender: this.$store.state.user,
           content: this.message,
           timestamp: new Date(),
-          // this is the tricky part. I don't want to pass a child's uid into the frontend whatsoever, so all that ties the message to the child is the username.
           recipientID: this.selectedUser.uid,
           recipientName: this.selectedUser.username,
-          channel: null,
         })
         .then(resolves => {
           this.message = "";

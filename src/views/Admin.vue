@@ -19,6 +19,20 @@
         </v-list-tile>
       </v-list>
     </v-card>
+    <v-card v-if="information">
+      <v-card-title primary-title>
+        Pending Approval
+      </v-card-title>
+      <div v-if="information.pendingApproval">
+        <div v-for="message in this.pendingApproval" :key="message.content">
+          <p>Intended for: {{ message.recipientName }}</p>
+          <p>Content: {{ message.content }}</p>
+          <p>Sent At: {{ message.timestamp.seconds }}</p>
+          <v-btn @click="processMessage(message, true)">Approve</v-btn>
+          <v-btn>Reject</v-btn>
+        </div>
+      </div>
+    </v-card>
   </div>
 </template>
 
@@ -31,6 +45,8 @@ export default {
       adminChannels: [],
       memberDetails: {},
       editMode: false,
+      pendingApproval: [],
+      childInfo: {},
     }
   },
   computed: {
@@ -95,6 +111,29 @@ export default {
             })
         });
       })
+    },
+    information(val) {
+      val.pendingApproval.map(commentID => {
+        firebase.firestore()
+          .collection('messages')
+          .doc(commentID)
+          .get()
+          .then(comment => {
+            this.pendingApproval.push(comment.data());
+          })
+          .catch(err => console.log({err}));
+      });
+
+      val.parentFor.map(childID => {
+        firebase.firestore()
+          .collection('userDetails')
+          .doc(childID)
+          .get()
+          .then(childInfo => {
+            this.$set(this.childInfo, childInfo.data().username, childInfo.id);
+          })
+          .catch(err => console.log({err}));
+      });
     }
   },
   methods: {
@@ -107,7 +146,25 @@ export default {
     // allows admin to manage user access to chat channels. 
     manageUsers() {
 
-    }
+    },
+    // This should take a message and create a new connection pipeline between the users in question. 
+    processMessage(message, approval) {
+      // if I approve the connection.
+      if (approval === true) {
+        // I create a new channel
+        firebase.firestore()
+          .collection('channels')
+          .add({
+            // the channel name will have to consist of member names or else be initialized as null
+            channelName: '',
+            // the members of this channel can be the recipient and the sender, eg, the original sender and your child, and then optionally yourself as well. 
+            members: [this.childInfo[message.recipientName], message.sender, this.$store.state.user],
+            // and the thread should be initialized with an opening message being this message. 
+            thread: [message]
+          });
+        // with that done, should the message just be deleted from the pending collection? Do we really need to store them anywhere other than in approved threads? 
+      }
+    },
   }
 }
 </script>
