@@ -245,6 +245,7 @@ export default {
 
 .message-sender {
   text-align: left;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 .myMessage {
   text-align: right;
@@ -252,5 +253,6 @@ export default {
 .message-content {
   text-align: left;
   font-size: 1.3em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 </style>

@@ -1,23 +1,23 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     user: null,
-    information: null,
+    information: null
   },
   mutations: {
-    setUser (state, uid) {
+    setUser(state, uid) {
       state.user = uid;
     },
-    setUserInformation (state, information) {
+    setUserInformation(state, information) {
       state.information = information;
     }
   },
   getters: {
-    userInformation(state){
+    userInformation(state) {
       return state.information;
     }
   }
