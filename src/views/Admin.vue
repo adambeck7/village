@@ -2,6 +2,7 @@
   <div>
     <v-card v-for="channel in adminChannels" :key="channel.id" style="width: 95%; margin: 0 auto;">
       <v-card-title primary-title>
+        <span style="position: relative; left: 90%; z-index: 200; color: blue; cursor: pointer;" @click="editMode ? editMode = false : editMode = true;">edit</span>
         <h3 class="headline mb-0">{{ channel.information.channelName }}</h3>
       </v-card-title>
        <v-list two-line>
@@ -9,7 +10,11 @@
           <v-list-tile-avatar v-if="memberDetails[channel.id][member]">{{ getInitials(memberDetails[channel.id][member]) }}</v-list-tile-avatar>
           <v-list-tile-content>
             <!-- Look into the watch variable that sets the memberDetails object to see why this makes sense. -->
-            <v-list-tile-title>{{ memberDetails[channel.id][member] }}</v-list-tile-title>
+            <v-list-tile-title >{{ memberDetails[channel.id][member] }}
+              <v-btn flat icon color="red" v-if="editMode" @click="manageUsers()" style="margin: 0;">
+                <v-icon>cancel</v-icon>
+              </v-btn>
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -25,6 +30,7 @@ export default {
     return {
       adminChannels: [],
       memberDetails: {},
+      editMode: false,
     }
   },
   computed: {
@@ -92,10 +98,15 @@ export default {
     }
   },
   methods: {
-    // just a bit of fun.
+    // just a bit of fun. Generates simple initials for usernames. 
     getInitials(name) {
       const firstLast = name.split(' ');
       return `${firstLast[0].charAt(0)}${firstLast[1].charAt(0)}`;
+    },
+
+    // allows admin to manage user access to chat channels. 
+    manageUsers() {
+
     }
   }
 }
