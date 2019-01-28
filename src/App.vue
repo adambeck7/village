@@ -124,6 +124,8 @@
 
 
 <script>
+import notifications from './notifications';
+
 console.log(window.location.href);
 if (window.location.href == "test") {
 }
@@ -186,6 +188,10 @@ export default {
     // }
   },
   mounted() {
+    Notification.requestPermission();
+    notifications.notifyOnThreadChange();
+    // notifications.notifyOnMount();
+
     // checking if the firebase recognized a current user and the Vuex state is null (happens when user is automatically logged in and never views the login screen). This allows us to always show a user state with the correct id, accessible across all apps. 
     if (firebase.auth().currentUser && !this.$store.state.user){
       this.$store.commit('setUser', firebase.auth().currentUser.uid);

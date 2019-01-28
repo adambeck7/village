@@ -161,6 +161,28 @@ export default {
             members: [this.childInfo[message.recipientName], message.sender, this.$store.state.user],
             // and the thread should be initialized with an opening message being this message. 
             thread: [message]
+          })
+          .then(newChannel => {
+              // now we need enable permissions for everyone.
+              const users = [this.childInfo[message.recipientName], message.sender, this.$store.state.user];
+
+              // adds the channel to each user's permissions array.
+              users.map(user => {
+                firebase.firestore()
+                  .collection('userDetails')
+                  .doc(user)
+                  .update({
+                    channels: firebase.firestore.FieldValue.arrayUnion(newChannel.id)
+                  });
+              });
+
+              // additionally adds the id to the parent's admin permissions.
+              firebase.firestore()
+                .collection('userDetails')
+                .doc(users[2])
+                .update({
+                  adminFor: firebase.firestore.FieldValue.arrayUnion(newChannel.id)
+                });
           });
         // with that done, should the message just be deleted from the pending collection? Do we really need to store them anywhere other than in approved threads? 
       }

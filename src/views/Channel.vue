@@ -104,7 +104,8 @@ export default {
       this.channelData.thread.push({
         content: this.message,
         sendTime: new Date(),
-        sender: this.$store.state.user
+        sender: this.$store.state.user,
+        senderName: this.$store.state.information.username
       });
 
       // clears the content of the text area.
