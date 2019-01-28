@@ -166,6 +166,16 @@ export default {
     // avatar() {
     //   if (firebase.auth().currentUser) return firebase.auth().currentUser.email.charAt(0);
     // }
+    userInformation() {
+      return this.$store.state.information
+    }
+  },
+  watch: {
+    userInformation(newInformation) {
+      newInformation.channels.map(channel => {
+        notifications.notifyOnThreadChange(channel);
+      });
+    }
   },
   methods: {
     logout: function() {
@@ -188,9 +198,6 @@ export default {
     // }
   },
   mounted() {
-    Notification.requestPermission();
-    notifications.notifyOnThreadChange();
-    // notifications.notifyOnMount();
 
     // checking if the firebase recognized a current user and the Vuex state is null (happens when user is automatically logged in and never views the login screen). This allows us to always show a user state with the correct id, accessible across all apps. 
     if (firebase.auth().currentUser && !this.$store.state.user){

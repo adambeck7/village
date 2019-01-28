@@ -5,11 +5,11 @@ const notifications = {
   notifyOnMount() {
     new Notification("I am a notification.")
   },
-  notifyOnThreadChange() {
+  notifyOnThreadChange(channelID) {
     firebase
       .firestore()
       .collection('channels')
-      .doc('BT7tiOsM7jtXblyAx4rB')
+      .doc(channelID)
       .onSnapshot(channelUpdate => {
         const thread = channelUpdate.data().thread;
 
