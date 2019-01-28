@@ -241,6 +241,7 @@ export default {
   margin-bottom: 1em;
   max-width: 60%;
   color: #fefefe;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .message-sender {
