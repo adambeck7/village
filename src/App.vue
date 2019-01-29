@@ -90,7 +90,13 @@
     </div>
     <router-view/>
     <v-card flat>
-      <v-bottom-nav :active.sync="bottomNav" :value="true" fixed color="transparent">
+      <v-bottom-nav
+        :active.sync="bottomNav"
+        :value="true"
+        fixed
+        class="bottomNavFooter"
+        color="transparent"
+      >
         <v-btn color="teal" flat value="home">
           <span>Home</span>
           <v-icon>home</v-icon>
@@ -186,19 +192,20 @@ export default {
     // }
   },
   mounted() {
-    // checking if the firebase recognized a current user and the Vuex state is null (happens when user is automatically logged in and never views the login screen). This allows us to always show a user state with the correct id, accessible across all apps. 
-    if (firebase.auth().currentUser && !this.$store.state.user){
-      this.$store.commit('setUser', firebase.auth().currentUser.uid);
+    // checking if the firebase recognized a current user and the Vuex state is null (happens when user is automatically logged in and never views the login screen). This allows us to always show a user state with the correct id, accessible across all apps.
+    if (firebase.auth().currentUser && !this.$store.state.user) {
+      this.$store.commit("setUser", firebase.auth().currentUser.uid);
     }
     // this adds user details to the vuex state.
-    firebase.firestore()
-      .collection('userDetails')
+    firebase
+      .firestore()
+      .collection("userDetails")
       .doc(this.$store.state.user)
       .get()
       .then(res => {
-        this.$store.commit('setUserInformation', res.data())
+        this.$store.commit("setUserInformation", res.data());
       })
-      .catch(err => console.log({err}));
+      .catch(err => console.log({ err }));
   }
 };
 </script>
@@ -241,6 +248,21 @@ export default {
 }
 .navBackground {
   background: #0386c1 !important;
+  // background: -webkit-linear-gradient(
+  //   360deg,
+  //   #38aecc 10%,
+  //   #347fb9 360%
+  // ); /* Chrome 10+, Saf5.1+ */
+  // background: -moz-linear-gradient(
+  //   360deg,
+  //   #38aecc 10%,
+  //   #347fb9 360%
+  // ); /* FF3.6+ */
+  background: linear-gradient(360deg, #38aecc 10%, #347fb9 360%); /* W3C */
+}
+.bottomNavFooter {
+  background-color: white !important;
+  margin-top: 1em;
 }
 // .navBackground
 //   > [role="list"]

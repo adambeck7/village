@@ -58,7 +58,7 @@ export default {
       show2: true,
       show3: false,
       show4: false,
-      password: "Password",
+      password: null,
       rules: {
         required: value => !!value || "Required.",
         min: v => v.length >= 8 || "Min 8 characters",
@@ -75,16 +75,17 @@ export default {
           // eslint-disable-next-line
           loginPacket => {
             // here we commit the uid to our store...
-            this.$store.commit('setUser', loginPacket.user.uid);
+            this.$store.commit("setUser", loginPacket.user.uid);
             // and get user details from firebase to move to the store as well.
-            firebase.firestore()
-              .collection('userDetails')
+            firebase
+              .firestore()
+              .collection("userDetails")
               .doc(loginPacket.user.uid)
               .get()
               .then(userDetails => {
-                this.$store.commit('setUserInformation', userDetails.data());
+                this.$store.commit("setUserInformation", userDetails.data());
               })
-              .catch(err => console.log({err}));
+              .catch(err => console.log({ err }));
 
             this.$router.replace("home");
           },
