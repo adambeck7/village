@@ -10,7 +10,6 @@
             </v-btn>
           </v-layout>
           <img class="home-logo" alt="Village logo" src="./assets/logo.png">
-          <p>{{ msg }}</p>
         </v-container>
 
         <v-navigation-drawer v-model="drawer" temporary absolute dark class="navBackground">
@@ -135,7 +134,6 @@ export default {
   data() {
     return {
       drawer: null,
-      msg: null,
       items: [
         { title: "Home", icon: "home" },
         { title: "Settings", icon: "settings" }
@@ -200,10 +198,6 @@ export default {
     // }
   },
   mounted() {
-    window.addEventListener('beforeinstallprompt', e => {
-      e.preventDefault();
-      this.msg = e;
-    });
     // checking if the firebase recognized a current user and the Vuex state is null (happens when user is automatically logged in and never views the login screen). This allows us to always show a user state with the correct id, accessible across all apps. 
     if (firebase.auth().currentUser && !this.$store.state.user){
       this.$store.commit('setUser', firebase.auth().currentUser.uid);
