@@ -38,6 +38,7 @@
 
 <script>
 import firebase from 'firebase';
+import permissions from '../permissions';
 
 export default {
   data() {
@@ -187,6 +188,16 @@ export default {
         // with that done, should the message just be deleted from the pending collection? Do we really need to store them anywhere other than in approved threads? 
       }
     },
+  },
+  mounted() {
+    permissions.openChannel({
+      message: "5LkOXtiUPzvEAyt9Utgh",
+      channelType: 1,
+      members: ["Jack", "Adam"]
+    }, (res, err) => {
+      if (err) throw err;
+      console.log(res);
+    })
   }
 }
 </script>
