@@ -130,6 +130,8 @@
 
 
 <script>
+import notifications from './notifications';
+
 console.log(window.location.href);
 if (window.location.href == "test") {
 }
@@ -170,6 +172,16 @@ export default {
     // avatar() {
     //   if (firebase.auth().currentUser) return firebase.auth().currentUser.email.charAt(0);
     // }
+    userInformation() {
+      return this.$store.state.information
+    }
+  },
+  watch: {
+    userInformation(newInformation) {
+      newInformation.channels.map(channel => {
+        notifications.notifyOnThreadChange(channel);
+      });
+    }
   },
   methods: {
     logout: function() {
